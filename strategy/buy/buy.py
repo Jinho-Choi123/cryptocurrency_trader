@@ -1,15 +1,12 @@
 # 변동성 돌파전략에 따라 thereshold을 구하고, 
 ## thereshold을 넘는 시점에 코인을 산다.
 ### 한번 구매하면 팔때까지 다시 구매하지 않는다.
-from utils.time import get_time, get_yesterday, get_date, add_hours, sub_hours
+from utils.utils import get_time, get_yesterday, get_date, add_hours, sub_hours
 from utils.info import Info_Candle
-from utils.marketName import getMarketName
-from collections import deque
+from utils.utils import getMarketName
+from utils.order import get_KRW, Order 
 
-currency_list = ['BTC', 'ETH']
-market_list = getMarketName(currency_list)
 k = 0.5 # noise value 
-deq = deque(maxlen=5)
 
 def get_thereshold(market):
     yesterday = get_yesterday()
@@ -18,7 +15,13 @@ def get_thereshold(market):
     thereshold = candle[0]['trade_price'] + price_var * k
     return thereshold
 
-def buy(market):
+def buy(market, ticker):
     thereshold = get_thereshold(market)
+    if ticker['trade_price'] > thereshold:
+        # buy
+        krw_assets = get_KRW()
+        price = krw_assets/10
+        Order(market, 'bid', None, price, 'price')
+        return True 
+    return False 
     
-        

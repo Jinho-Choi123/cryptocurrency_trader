@@ -1,7 +1,8 @@
 import asyncio
 import websockets
 import json
-from .Ticker import Ticker
+from utils.Ticker import Ticker
+from buy import buy
 
 async def recv(market):
     uri = 'wss://api.upbit.com/websocket/v1'
@@ -23,7 +24,15 @@ async def recv(market):
         while True:
             data = await websocket.recv()
             data = Ticker.from_json(json.loads(data))
-            print(f">> {data}")
+            #buy function here 
+            trade_stat = await buy(market, data)
+            if(trade_stat):
+                print("Buy Success")
+                break
+            else:
+                pass
+        return 
             
-def recv_ticker(market, deq):
-    asyncio.run(recv(market, deq))
+# main buying function
+def buyer(market):
+    asyncio.run(recv(market))

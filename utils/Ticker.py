@@ -1,5 +1,6 @@
 import datetime
 from pytz import timezone
+
 class Ticker:
     def __init__(self, code, timestamp, open, trade, high, low, volume):
         self.code = code

@@ -1,6 +1,4 @@
 import os 
-import jwt 
-import uuid
 import hashlib
 from urllib.parse import urlencode
 
@@ -47,6 +45,3 @@ def get_KRW():
         if i['currency'] == 'KRW':
             return i['balance']
     return 0
-
-if __name__ == '__main__':
-    Order_Sell_All()

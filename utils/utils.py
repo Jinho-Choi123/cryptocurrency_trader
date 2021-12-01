@@ -1,4 +1,4 @@
-from datetime import datetime, timezone 
+from datetime import datetime, timedelta, timezone 
 
 def get_date():
     return datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -14,3 +14,12 @@ def add_hours(dt, hours):
 
 def sub_hours(dt, hours):
     return dt - datetime.timedelta(hours=hours)
+
+def getMarketName(currency_list):
+    market_list = []
+    for i in currency_list:
+        if i == 'KRW':
+            pass
+        else:
+            market_list.append('KRW-' + i)
+    return market_list
